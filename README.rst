@@ -23,7 +23,7 @@ Root-Tissue-Segmentation Package
         :target: https://flat.badgen.net/dependabot/thepracticaldev/dev.to?icon=dependabot
         :alt: Dependabot Enabled
 
-Prediction package for reproducible U-Net models trained on a semantic segmentation dataset of fluorescence microscopy images from root tissue samples of A. thaliana ([training core](https://github.com/qbic-pipelines/root-tissue-segmentation-core/)).
+Prediction package for reproducible U-Net models trained on a semantic segmentation dataset of fluorescence microscopy images from root tissue samples of A. thaliana (`training core`_.
 
 * Free software: MIT
 * Documentation: https://rts-package.readthedocs.io.
@@ -41,5 +41,6 @@ Credits
 
 This package was created with mlf-core_ using cookiecutter_.
 
+.. _`training core`: https://github.com/qbic-pipelines/root-tissue-segmentation-core/
 .. _mlf-core: https://mlf-core.com
 .. _cookiecutter: https://github.com/audreyr/cookiecutter
