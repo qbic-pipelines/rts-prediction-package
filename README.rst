@@ -1,6 +1,6 @@
-===========
-rts_package
-===========
+================================
+Root-Tissue-Segmentation Package
+================================
 
 .. image:: https://github.com/waseju/rts_package/workflows/Build%20rts_package%20Package/badge.svg
         :target: https://github.com/waseju/rts_package/workflows/Build%20rts_package%20Package/badge.svg
@@ -23,18 +23,18 @@ rts_package
         :target: https://flat.badgen.net/dependabot/thepracticaldev/dev.to?icon=dependabot
         :alt: Dependabot Enabled
 
-
-rts_package.
-
+Prediction package for reproducible U-Net models trained on a semantic segmentation dataset of fluorescence microscopy images from root tissue samples of A. thaliana ([training core](https://github.com/qbic-pipelines/root-tissue-segmentation-core/)).
 
 * Free software: MIT
 * Documentation: https://rts-package.readthedocs.io.
 
+These models are trained using the mlf-core framework (https://github.com/mlf-core/liver-ct-segmentation/).
 
-Features
---------
+Package Tools
+-------------
 
-* Conducts prediction for A. thaliana root tissue.
+* Prediction CLI: `rts_package`
+
 
 Credits
 -------
