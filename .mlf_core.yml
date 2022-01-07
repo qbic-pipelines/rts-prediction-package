@@ -1,7 +1,7 @@
 domain: package
 language: prediction
-project_slug: rts_package
-project_slug_no_hyphen: rts_package
+project_slug: root-tissue-seg-package
+project_slug_no_hyphen: root-tissue-seg-package
 template_version: 'None # <<MLF-CORE_NO_BUMP>>'
 template_handle: package-prediction
 github_username: waseju
@@ -11,8 +11,8 @@ is_repo_private: true
 is_github_orga: false
 full_name: Julian Wanner
 email: jwgithub@mailbox.org
-project_name: rts_package
-project_short_description: Root tissue segmentation package. An mlf-core package.
-version: 1.0.3
+project_name: root-tissue-seg-package
+project_short_description: An mlf-core prediction package for root tissue segmentation.
+version: 1.0.4
 license: MIT
 framework: pytorch
