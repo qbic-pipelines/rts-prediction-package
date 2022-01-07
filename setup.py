@@ -50,7 +50,7 @@ setup(
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
     ],
-    description="rts_package. A mlf-core based .",
+    description="An mlf-core prediction package for root tissue segmentation.",
     entry_points={
         'console_scripts': [
             'rts_package=rts_package.cli_pytorch:main',
@@ -60,8 +60,8 @@ setup(
     license="MIT",
     long_description=readme + '\n\n' + history,
     include_package_data=True,
-    keywords='rts_package',
-    name='rts_package',
+    keywords='root tissue segmentation',
+    name='root-tissue-seg-package',
     packages=find_packages(include=['rts_package', 'rts_package.*']),
     package_data={
         module.__name__: walker(
@@ -72,6 +72,6 @@ setup(
     setup_requires=setup_requirements,
     tests_require=test_requirements,
     url='https://github.com/qbic-pipelines/rts-prediction-package/',
-    version='1.0.3',
+    version='1.0.4',
     zip_safe=False,
 )
