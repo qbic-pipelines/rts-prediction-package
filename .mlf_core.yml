@@ -1,0 +1,18 @@
+domain: package
+language: prediction
+project_slug: rts_package
+project_slug_no_hyphen: rts_package
+template_version: 'None # <<MLF-CORE_NO_BUMP>>'
+template_handle: package-prediction
+github_username: waseju
+creator_github_username: waseju
+is_github_repo: true
+is_repo_private: true
+is_github_orga: false
+full_name: Julian Wanner
+email: jwgithub@mailbox.org
+project_name: rts_package
+project_short_description: rts_package. A mlf-core based .
+version: 1.1.12
+license: MIT
+framework: pytorch
