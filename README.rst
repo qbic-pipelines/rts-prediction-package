@@ -2,12 +2,12 @@
 Root-Tissue-Segmentation Package
 ================================
 
-.. image:: https://github.com/waseju/rts_package/workflows/Build%20rts_package%20Package/badge.svg
-        :target: https://github.com/waseju/rts_package/workflows/Build%20rts_package%20Package/badge.svg
+.. image:: https://github.com/qbic-pipelines/rts-prediction-package/workflows/Build%20rts_package%20Package/badge.svg
+        :target: https://github.com/qbic-pipelines/rts-prediction-package/workflows/Build%20rts_package%20Package/badge.svg
         :alt: Github Workflow Build rts_package Status
 
-.. image:: https://github.com/waseju/rts_package/workflows/Run%20rts_package%20Tox%20Test%20Suite/badge.svg
-        :target: https://github.com/waseju/rts_package/workflows/Run%20rts_package%20Tox%20Test%20Suite/badge.svg
+.. image:: https://github.com/qbic-pipelines/rts-prediction-package/workflows/Run%20rts_package%20Tox%20Test%20Suite/badge.svg
+        :target: https://github.com/qbic-pipelines/rts-prediction-package/workflows/Run%20rts_package%20Tox%20Test%20Suite/badge.svg
         :alt: Github Workflow Tests Status
 
 .. image:: https://img.shields.io/pypi/v/rts_package.svg
