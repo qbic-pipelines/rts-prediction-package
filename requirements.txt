@@ -9,4 +9,4 @@ torch-optimizer~=0.1.0
 tifffile~=2021.8.30
 PyYAML~=5.4.1
 
-torchvision~=0.10.1
+torchvision~=0.11.2
