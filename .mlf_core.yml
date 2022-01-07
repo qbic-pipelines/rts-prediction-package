@@ -12,7 +12,7 @@ is_github_orga: false
 full_name: Julian Wanner
 email: jwgithub@mailbox.org
 project_name: rts_package
-project_short_description: rts_package. A mlf-core based .
-version: 1.1.12
+project_short_description: Root tissue segmentation package. An mlf-core package.
+version: 1.0.3
 license: MIT
 framework: pytorch
