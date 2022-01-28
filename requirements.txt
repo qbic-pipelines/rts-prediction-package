@@ -1,4 +1,4 @@
-rich~=10.11.0
+rich~=11.1.0
 click~=8.0.1
 
 setuptools~=58.2.0
