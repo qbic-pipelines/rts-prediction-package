@@ -54,6 +54,7 @@ setup(
     entry_points={
         'console_scripts': [
             'rts_package=rts_package.cli_pytorch:main',
+            'rts-pred-uncert=rts_package.cli_uncert_pred:main',
         ],
     },
     install_requires=requirements,
