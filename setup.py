@@ -55,6 +55,7 @@ setup(
         'console_scripts': [
             'rts_package=rts_package.cli_pytorch:main',
             'rts-pred-uncert=rts_package.cli_uncert_pred:main',
+            'rts-feat-imp=rts_package.cli_feat_imp:main',
         ],
     },
     install_requires=requirements,

@@ -11,4 +11,5 @@ PyYAML~=5.4.1
 
 torchvision~=0.10.1
 
-torchmetrics~=0.6.0
+torchmetrics==0.6.0
+captum==0.4.0
