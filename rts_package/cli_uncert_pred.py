@@ -41,11 +41,12 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
     if cuda:
         model.cuda()
     
+    print('[bold blue] Calculating prediction uncertainty via MC-Dropout')
     print('[bold blue] Parsing data...')
     if os.path.isdir(input):
         input_list = glob.glob(os.path.join(input, "*"))
         for inputs in input_list:
-            print("Input: " + str(inputs))
+            print(f'[bold yellow] Input: {inputs}')
             file_uncert(inputs, model, inputs.replace(input, output).replace(".tif", suffix), mc_dropout_it=iter)
 
     else:
@@ -56,11 +57,11 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
 
 def file_uncert(input, model, output, mc_dropout_it=10):
     input_data = read_input_data(input)
-    print('[bold blue] Calculating prediction uncertainty...')
     pred_std = prediction_std(model, input_data, t=mc_dropout_it)
     
-    print(f'[bold blue] Writing output to: {output}_uncert_')
-    #write_results(pred_std, output)
+    print(f'[bold green] Output: {output}_uncert_')
+    
+    #write_results(pred_std, output + "_uncert_")
     write_ome_out(input_data, pred_std, output + "_uncert_")
 
 

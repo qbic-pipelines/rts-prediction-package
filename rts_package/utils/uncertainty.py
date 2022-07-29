@@ -25,7 +25,7 @@ def predict_dist(model, X, T=100):
 
     softmax_out_stack = []
 
-    with alive_bar(T, title=f'MC-Dropout:') as bar:
+    with alive_bar(T, title=f' MC-Dropout:') as bar:
         for mc_i in range(T):
             
             logits = model(Variable(X))[0]

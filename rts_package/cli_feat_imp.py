@@ -29,22 +29,22 @@ WD = os.path.dirname(__file__)
               help='Whether to remove model after prediction or not.')
 @click.option('-suf', '--suffix', type=str, help='Path to write the output to')
 @click.option('-o', '--output', default="", required=True, type=str, help='Path to write the output to')
-@click.option('-f', '--feat', default='_feat_vol.mrc', type=str, help='Filename for ggcam features output')
-@click.option('-t', '--target', default='0', type=str, help='Output indices for which gradients are computed (target class)')
-def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, feat: str, target: str):
-    """Command-line interface for rts_package"""
+@click.option('-f', '--feat', default='_feat.ome.tif', type=str, help='Filename for ggcam features output')
+@click.option('-t', '--target', required=True, type=int, help='Output indices for which gradients are computed (target class)')
+def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, feat: str, target: int):
+    """Command-line interface for rts-feat-imp"""
 
     print(r"""[bold blue]
-        rts_package
+        rts-feat-imp
         """)
 
-    print('[bold blue]Run [green]rts_package --help [blue]for an overview of all commands\n')
+    print('[bold blue]Run [green]rts-feat-imp --help [blue]for an overview of all commands\n')
 
     out_filename = feat
-    target_class = int(target)
+    target_class = target
 
     print('[bold blue] Calculating Guided Grad-CAM features...')
-    print('[bold blue] Target class: ' + target)
+    print('[bold blue] Target class: ' + str(target_class))
 
     if not model:
         model = get_pytorch_model(os.path.join(f'{os.getcwd()}', "models", "model.ckpt"))
@@ -53,48 +53,27 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
     if cuda:
         model.cuda()
     
-    print('[bold blue] Parsing data')
+    print('[bold blue] Parsing data...')
     if os.path.isdir(input):
         input_list = glob.glob(os.path.join(input, "*"))
         for inputs in input_list:
+            print(f'[bold yellow] Input: {inputs}')
             file_feature_importance(inputs, model, target_class, inputs.replace(input, output).replace(".tif", suffix))
     else:
-        file_prediction(input, model, output)
+        file_feature_importance(input, model, output)
     if sanitize:
         os.remove(os.path.join(f'{WD}', "models", "model.ckpt"))
 
 
 def file_feature_importance(input, model, target_class, output):
-    data_to_predict = read_data_to_predict(input)
+    input_data = read_input_data(input)
     
-    print('[bold blue] Calculating gg-cam')
-    feat_ggcam = features_ggcam(model, data_to_predict, target_class)
+    feat_ggcam = features_ggcam(model, input_data, target_class)
     
-    print(f'[bold blue]Writing output to {output}')
+    print(f'[bold green] Output: {output}_ggcam_t_{target_class}')
 
-    write_ome_out(data_to_predict, feat_ggcam, output + "_ggcam_")
-    #write_results(predictions, output)
-
-
-def write_ome_out(data_to_predict, predictions, path_to_write_to) -> None:
-    """
-    Writes the predictions into a human readable file.
-    :param predictions: Predictions as a numpy array
-    :param path_to_write_to: Path to write the predictions to
-    """
-    os.makedirs(pathlib.Path(path_to_write_to).parent.absolute(), exist_ok=True)
-    
-    print("in shape: " + str(data_to_predict.shape))
-    print("out shape: " + str(predictions.shape))
-
-    full_image = np.zeros((512, 512, 2))
-    full_image[:, :, 0] = data_to_predict[0, :, :]
-    full_image[:, :, 1] = predictions
-    full_image = np.transpose(full_image, (2, 0, 1))
-    with tiff.TiffWriter(os.path.join(path_to_write_to + ".ome.tif")) as tif_file:
-        tif_file.write(full_image, photometric='minisblack', metadata={'axes': 'CYX', 'Channel': {'Name': ["image", "seg_mask"]}})
-    
-    pass
+    write_ome_out(input_data, feat_ggcam, output + "_ggcam_t_" + str(target_class))
+    #write_results(feat_ggcam, output + "_ggcam_t_" + str(target_class))
 
 
 def features_ggcam(net, data_to_predict, target_class):
@@ -118,6 +97,7 @@ def features_ggcam(net, data_to_predict, target_class):
 
     return img_out
 
+
 class agg_segmentation_wrapper_module(nn.Module):
     
     def __init__(self, model):
@@ -134,33 +114,41 @@ class agg_segmentation_wrapper_module(nn.Module):
         return (model_out * selected_inds).sum(dim=(2, 3))
 
 
-
-
-
-def file_prediction(input, model, output):
-    data_to_predict = read_data_to_predict(input)
-    print('[bold blue] Performing predictions')
-    predictions = predict(data_to_predict, model)
-    print(f'[bold blue]Writing predictions to {output}')
-    write_results(predictions, output)
-
-
-def read_data_to_predict(path_to_data_to_predict: str):
+def read_input_data(path_to_input_data: str):
     """
-    Parses the data to predict and returns a full Dataset include the DMatrix
-    :param path_to_data_to_predict: Path to the data on which predictions should be performed on
+    Reads the data of an input image
+    :param path_to_input_data: Path to the input data file
     """
-    return tiff.imread(path_to_data_to_predict)
+    return tiff.imread(path_to_input_data)
 
 
-def write_results(predictions: np.ndarray, path_to_write_to) -> None:
+def write_results(results_array: np.ndarray, path_to_write_to) -> None:
     """
-    Writes the predictions into a human readable file.
-    :param predictions: Predictions as a numpy array
-    :param path_to_write_to: Path to write the predictions to
+    Writes the output into a file.
+    :param results_array: output as a numpy array
+    :param path_to_write_to: Output path
     """
     os.makedirs(pathlib.Path(path_to_write_to).parent.absolute(), exist_ok=True)
-    np.save(path_to_write_to, predictions)
+    np.save(path_to_write_to, results_array)
+    pass
+
+
+def write_ome_out(input_data, results_array, path_to_write_to) -> None:
+    """
+    TODO
+    """
+    os.makedirs(pathlib.Path(path_to_write_to).parent.absolute(), exist_ok=True)
+    
+    #print("write_ome_out input: " + str(input_data.shape))
+    #print("write_ome_out output: " + str(results_array.shape))
+
+    full_image = np.zeros((512, 512, 2))
+    full_image[:, :, 0] = input_data[0, :, :]
+    full_image[:, :, 1] = results_array
+    full_image = np.transpose(full_image, (2, 0, 1))
+    with tiff.TiffWriter(os.path.join(path_to_write_to + ".ome.tif")) as tif_file:
+        tif_file.write(full_image, photometric='minisblack', metadata={'axes': 'CYX', 'Channel': {'Name': ["image", "ggcam"]}})
+    
     pass
 
 
@@ -173,14 +161,6 @@ def get_pytorch_model(path_to_pytorch_model: str):
     model = U2NET.load_from_checkpoint(path_to_pytorch_model, num_classes=5, len_test_set=120, strict=False).to('cpu')
     model.eval()
     return model
-
-
-def predict(data_to_predict, model):
-    img = data_to_predict[0, :, :]
-    img = torch.from_numpy(np.expand_dims(np.expand_dims(img, 0), 0)).float()
-    logits = model(img)[0]
-    prediction = torch.argmax(logits.squeeze(), dim=0).cpu().detach().numpy().squeeze()
-    return prediction
 
 
 def _check_exists(filepath) -> bool:

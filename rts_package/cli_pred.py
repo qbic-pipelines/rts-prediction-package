@@ -24,24 +24,25 @@ WD = os.path.dirname(__file__)
 @click.option('-suf', '--suffix', type=str, help='Path to write the output to')
 @click.option('-o', '--output', default="", required=True, type=str, help='Path to write the output to')
 def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool):
-    """Command-line interface for rts_package"""
+    """Command-line interface for rts-pred"""
 
     print(r"""[bold blue]
-        rts_package
+        rts-pred
         """)
 
-    print('[bold blue]Run [green]rts_package --help [blue]for an overview of all commands\n')
+    print('[bold blue] Run [green]rts-pred --help [blue]for an overview of all commands\n')
     if not model:
         model = get_pytorch_model(os.path.join(f'{os.getcwd()}', "models", "model.ckpt"))
     else:
         model = get_pytorch_model(model)
     if cuda:
         model.cuda()
-    print('[bold blue] Parsing data')
+    print('[bold blue] Parsing data...')
     if os.path.isdir(input):
         input_list = glob.glob(os.path.join(input, "*"))
-        for inputs in input_list:
-            file_prediction(inputs, model, inputs.replace(input, output).replace(".tif", suffix))
+        for input_i in input_list:
+            print(f'[bold yellow] Input: {input_i}')
+            file_prediction(input_i, model, input_i.replace(input, output).replace(".tif", suffix))
     else:
         file_prediction(input, model, output)
     if sanitize:
@@ -50,10 +51,11 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
 
 def file_prediction(input, model, output):
     data_to_predict = read_data_to_predict(input)
-    print('[bold blue] Performing predictions')
     predictions = predict(data_to_predict, model)
-    print(f'[bold blue]Writing predictions to {output}')
+    
+    print(f'[bold green] Output: {output}')
     write_results(predictions, output)
+    write_ome_out(data_to_predict, predictions, output)
 
 
 def read_data_to_predict(path_to_data_to_predict: str):
