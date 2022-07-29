@@ -196,7 +196,7 @@ def download(filepath) -> None:
         'https://zenodo.org/record/',
     ]
     resources = [
-        ("model.ckpt", "5181261/files/model.ckpt", "f73c3d232fd1d1eae5547547b37ed4f1"),
+        ("mark1-PHDFM-u2net-model.ckpt", "6937290/files/mark1-PHDFM-u2net-model.ckpt", "5dd5d425afb4b17444cb31b1343f23dc"),
     ]
     # download files
     for filename, uniqueID, md5 in resources:

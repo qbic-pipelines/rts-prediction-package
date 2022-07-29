@@ -13,3 +13,5 @@ torchvision~=0.10.1
 
 torchmetrics==0.6.0
 captum==0.4.0
+
+alive-progress==2.4.1

@@ -75,6 +75,25 @@ def write_results(predictions: np.ndarray, path_to_write_to) -> None:
     pass
 
 
+def write_ome_out(input_data, results_array, path_to_write_to) -> None:
+    """
+    TODO
+    """
+    os.makedirs(pathlib.Path(path_to_write_to).parent.absolute(), exist_ok=True)
+    
+    #print("write_ome_out input: " + str(input_data.shape))
+    #print("write_ome_out output: " + str(results_array.shape))
+
+    full_image = np.zeros((512, 512, 2))
+    full_image[:, :, 0] = input_data[0, :, :]
+    full_image[:, :, 1] = results_array
+    full_image = np.transpose(full_image, (2, 0, 1))
+    with tiff.TiffWriter(os.path.join(path_to_write_to + ".ome.tif")) as tif_file:
+        tif_file.write(full_image, photometric='minisblack', metadata={'axes': 'CYX', 'Channel': {'Name': ["image", "seg_mask"]}})
+    
+    pass
+
+
 def get_pytorch_model(path_to_pytorch_model: str):
     """
     Fetches the model of choice and creates a booster from it.
@@ -107,7 +126,7 @@ def download(filepath) -> None:
         'https://zenodo.org/record/',
     ]
     resources = [
-        ("model.ckpt", "5181261/files/model.ckpt", "f73c3d232fd1d1eae5547547b37ed4f1"),
+        ("mark1-PHDFM-u2net-model.ckpt", "6937290/files/mark1-PHDFM-u2net-model.ckpt", "5dd5d425afb4b17444cb31b1343f23dc"),
     ]
     # download files
     for filename, uniqueID, md5 in resources:
