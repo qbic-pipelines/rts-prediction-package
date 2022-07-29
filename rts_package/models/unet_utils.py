@@ -104,12 +104,13 @@ class REBNCONV(nn.Module):
     def __init__(self, in_ch=3, out_ch=3, dilate=1):
         super(REBNCONV, self).__init__()
 
+        self.dropout_1 = nn.Dropout2d(0.0)
         self.conv_s1 = nn.Conv2d(in_ch, out_ch, 3, padding=1)
         self.bn_s1 = nn.BatchNorm2d(out_ch)
         self.relu_s1 = nn.ReLU(inplace=True)
 
     def forward(self, x):
-        return self.relu_s1(self.bn_s1(self.conv_s1(x)))
+        return self.relu_s1(self.bn_s1(self.conv_s1(self.dropout_1(x))))
 
 
 class RSU(nn.Module):

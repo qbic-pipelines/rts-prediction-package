@@ -33,7 +33,16 @@ Prediction package for reproducible U-Net models, trained for semantic segmentat
 Package Tools
 -------------
 
-* Prediction CLI: ``rts_package``
+* Segmentation prediction CLI: ``rts-pred``
+* Uncertainty of prediction CLI: ``rts-pred-uncert``
+* Input feature importance (Guided Grad-CAM) CLI: ``rts-feat-imp``
+
+Usage Examples
+--------------
+
+* ``rts-pred -i ./brightfields -o ./predictions -m mark1-PHDFM-u2net-model.ckpt --suffix ""``
+* ``rts-pred-uncert -i ./brightfields -o ./predictions -m mark1-PHDFM-u2net-model.ckpt --suffix "" -t 5``
+* ``rts-feat-imp -i ./brightfields -o ./predictions -m mark1-PHDFM-u2net-model.ckpt --suffix "" -t 2``
 
 
 Credits
