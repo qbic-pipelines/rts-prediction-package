@@ -45,6 +45,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Root-Tissue-Segmentation Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#package-tools">Package Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#credits">Credits</a></li>
 </ul>
 </li>
@@ -94,7 +95,17 @@
 <section id="package-tools">
 <h2>Package Tools<a class="headerlink" href="#package-tools" title="Permalink to this headline"></a></h2>
 <ul class="simple">
-<li><p>Prediction CLI: <code class="docutils literal notranslate"><span class="pre">rts_package</span></code></p></li>
+<li><p>Segmentation prediction CLI: <code class="docutils literal notranslate"><span class="pre">rts-pred</span></code></p></li>
+<li><p>Uncertainty of prediction CLI: <code class="docutils literal notranslate"><span class="pre">rts-pred-uncert</span></code></p></li>
+<li><p>Input feature importance (Guided Grad-CAM) CLI: <code class="docutils literal notranslate"><span class="pre">rts-feat-imp</span></code></p></li>
+</ul>
+</section>
+<section id="usage-examples">
+<h2>Usage Examples<a class="headerlink" href="#usage-examples" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rts-pred</span> <span class="pre">-i</span> <span class="pre">./brightfields</span> <span class="pre">-o</span> <span class="pre">./predictions</span> <span class="pre">-m</span> <span class="pre">mark1-PHDFM-u2net-model.ckpt</span> <span class="pre">--suffix</span> <span class="pre">&quot;&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rts-pred-uncert</span> <span class="pre">-i</span> <span class="pre">./brightfields</span> <span class="pre">-o</span> <span class="pre">./predictions</span> <span class="pre">-m</span> <span class="pre">mark1-PHDFM-u2net-model.ckpt</span> <span class="pre">--suffix</span> <span class="pre">&quot;&quot;</span> <span class="pre">-t</span> <span class="pre">5</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rts-feat-imp</span> <span class="pre">-i</span> <span class="pre">./brightfields</span> <span class="pre">-o</span> <span class="pre">./predictions</span> <span class="pre">-m</span> <span class="pre">mark1-PHDFM-u2net-model.ckpt</span> <span class="pre">--suffix</span> <span class="pre">&quot;&quot;</span> <span class="pre">-t</span> <span class="pre">2</span></code></p></li>
 </ul>
 </section>
 <section id="credits">
