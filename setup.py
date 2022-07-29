@@ -74,6 +74,6 @@ setup(
     setup_requires=setup_requirements,
     tests_require=test_requirements,
     url='https://github.com/qbic-pipelines/rts-prediction-package/',
-    version='1.0.4',
+    version='1.0.5',
     zip_safe=False,
 )
