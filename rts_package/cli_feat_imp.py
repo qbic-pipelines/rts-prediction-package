@@ -23,15 +23,17 @@ WD = os.path.dirname(__file__)
 @click.command()
 @click.option('-i', '--input', required=True, type=str, help='Path to data file to predict.')
 @click.option('-m', '--model', type=str,
-              help='Path to an already trained XGBoost model. If not passed a default model will be loaded.')
+            help='Path to an already trained XGBoost model. If not passed a default model will be loaded.')
 @click.option('-c/-nc', '--cuda/--no-cuda', type=bool, default=False, help='Whether to enable cuda or not')
 @click.option('-s/-ns', '--sanitize/--no-sanitize', type=bool, default=False,
-              help='Whether to remove model after prediction or not.')
+            help='Whether to remove model after prediction or not.')
 @click.option('-suf', '--suffix', type=str, help='Path to write the output to')
 @click.option('-o', '--output', default="", required=True, type=str, help='Path to write the output to')
 @click.option('-f', '--feat', default='_feat.ome.tif', type=str, help='Filename for ggcam features output')
-@click.option('-t', '--target', required=True, type=int, help='Output indices for which gradients are computed (target class)')
-def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, feat: str, target: int):
+@click.option('-t', '--target', required=True, type=int,
+            help='Output indices for which gradients are computed (target class)')
+@click.option('-h', '--ome', type=bool, default=False, help='human readable output (OME-TIFF format), input and output as image channels')
+def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, feat: str, target: int, ome:bool):
     """Command-line interface for rts-feat-imp"""
 
     print(r"""[bold blue]
@@ -58,21 +60,28 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
         input_list = glob.glob(os.path.join(input, "*"))
         for inputs in input_list:
             print(f'[bold yellow] Input: {inputs}')
-            file_feature_importance(inputs, model, target_class, inputs.replace(input, output).replace(".tif", suffix))
+            file_feature_importance(inputs, model, target_class, inputs.replace(input, output).replace(".tif", suffix), ome_out=ome)
     else:
-        file_feature_importance(input, model, output)
+        file_feature_importance(input, model, output, ome_out=ome)
     if sanitize:
         os.remove(os.path.join(f'{WD}', "models", "model.ckpt"))
 
 
-def file_feature_importance(input, model, target_class, output):
+def file_feature_importance(input, model, target_class, output, ome_out=False):
     input_data = read_input_data(input)
     
     feat_ggcam = features_ggcam(model, input_data, target_class)
     
-    print(f'[bold green] Output: {output}_ggcam_t_{target_class}')
+    if ome_out:
+        print(f'[bold green] Output: {output}_ggcam_t_{target_class}.ome.tif')
+        write_ome_out(input_data, feat_ggcam, output + "_ggcam_t_" + str(target_class))
+    else:
+        print(f'[bold green] Output: {output}_ggcam_t_{target_class}.npy')
+        write_results(feat_ggcam, output + "_ggcam_t_" + str(target_class))
 
-    write_ome_out(input_data, feat_ggcam, output + "_ggcam_t_" + str(target_class))
+    #print(f'[bold green] Output: {output}_ggcam_t_{target_class}')
+
+    #write_ome_out(input_data, feat_ggcam, output + "_ggcam_t_" + str(target_class))
     #write_results(feat_ggcam, output + "_ggcam_t_" + str(target_class))
 
 

@@ -23,7 +23,8 @@ WD = os.path.dirname(__file__)
               help='Whether to remove model after prediction or not.')
 @click.option('-suf', '--suffix', type=str, help='Path to write the output to')
 @click.option('-o', '--output', default="", required=True, type=str, help='Path to write the output to')
-def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool):
+@click.option('-h', '--ome', type=bool, default=False, help='human readable output (OME-TIFF format), input and output as image channels')
+def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, ome: bool):
     """Command-line interface for rts-pred"""
 
     print(r"""[bold blue]
@@ -42,20 +43,23 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
         input_list = glob.glob(os.path.join(input, "*"))
         for input_i in input_list:
             print(f'[bold yellow] Input: {input_i}')
-            file_prediction(input_i, model, input_i.replace(input, output).replace(".tif", suffix))
+            file_prediction(input_i, model, input_i.replace(input, output).replace(".tif", suffix), ome_out=ome)
     else:
-        file_prediction(input, model, output)
+        file_prediction(input, model, output, ome_out=ome)
     if sanitize:
         os.remove(os.path.join(f'{WD}', "models", "model.ckpt"))
 
 
-def file_prediction(input, model, output):
+def file_prediction(input, model, output, ome_out=False):
     data_to_predict = read_data_to_predict(input)
     predictions = predict(data_to_predict, model)
     
-    print(f'[bold green] Output: {output}')
-    write_results(predictions, output)
-    write_ome_out(data_to_predict, predictions, output)
+    if ome:
+        print(f'[bold green] Output: {output}.ome.tif')
+        write_ome_out(data_to_predict, predictions, output)
+    else:
+        print(f'[bold green] Output: {output}.npy')
+        write_results(predictions, output)
 
 
 def read_data_to_predict(path_to_data_to_predict: str):
