@@ -26,7 +26,8 @@ WD = os.path.dirname(__file__)
 @click.option('-suf', '--suffix', type=str, help='Path to write the output to')
 @click.option('-o', '--output', default="", required=True, type=str, help='Path to write the output to')
 @click.option('-t', '--iter', default=10, required=True, type=int, help='Number of MC-Dropout interations')
-def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, iter: int):
+@click.option('-h', '--ome', type=bool, default=False, help='human readable output (OME-TIFF format), input and output as image channels')
+def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize: bool, iter: int, ome: bool):
     """Command-line interface for rts-pred-uncert"""
 
     print(r"""[bold blue]
@@ -47,22 +48,25 @@ def main(input: str, suffix: str, model: str, cuda: bool, output: str, sanitize:
         input_list = glob.glob(os.path.join(input, "*"))
         for inputs in input_list:
             print(f'[bold yellow] Input: {inputs}')
-            file_uncert(inputs, model, inputs.replace(input, output).replace(".tif", suffix), mc_dropout_it=iter)
+            file_uncert(inputs, model, inputs.replace(input, output).replace(".tif", suffix), mc_dropout_it=iter, ome_out=ome)
 
     else:
-        file_uncert(input, model, output)
+        file_uncert(input, model, output, ome_out=ome)
     if sanitize:
         os.remove(os.path.join(f'{WD}', "models", "model.ckpt"))
 
 
-def file_uncert(input, model, output, mc_dropout_it=10):
+def file_uncert(input, model, output, mc_dropout_it=10, ome_out=False):
     input_data = read_input_data(input)
     pred_std = prediction_std(model, input_data, t=mc_dropout_it)
     
-    print(f'[bold green] Output: {output}_uncert_')
+    if ome_out:
+        print(f'[bold green] Output: {output}_uncert_.ome.tif')
+        write_ome_out(input_data, pred_std, output + "_uncert_")
+    else:
+        print(f'[bold green] Output: {output}_uncert_.npy')
+        write_results(pred_std, output + "_uncert_")
     
-    #write_results(pred_std, output + "_uncert_")
-    write_ome_out(input_data, pred_std, output + "_uncert_")
 
 
 def prediction_std(net, img, t=10):
