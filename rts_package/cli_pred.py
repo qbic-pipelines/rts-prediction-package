@@ -54,7 +54,7 @@ def file_prediction(input, model, output, ome_out=False):
     data_to_predict = read_data_to_predict(input)
     predictions = predict(data_to_predict, model)
     
-    if ome:
+    if ome_out:
         print(f'[bold green] Output: {output}.ome.tif')
         write_ome_out(data_to_predict, predictions, output)
     else:

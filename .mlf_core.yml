@@ -13,6 +13,6 @@ full_name: Julian Wanner
 email: jwgithub@mailbox.org
 project_name: root-tissue-seg-package
 project_short_description: An mlf-core prediction package for root tissue segmentation.
-version: 1.0.6
+version: 1.0.7
 license: MIT
 framework: pytorch

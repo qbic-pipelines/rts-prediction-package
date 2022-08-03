@@ -4,7 +4,7 @@ FROM python:3.8.12-slim-bullseye
 RUN apt update
 RUN apt-get install -y procps wget
 RUN pip install --upgrade pip setuptools wheel
-# RUN pip install root-tissue-seg-package=1.0.6
+# RUN pip install root-tissue-seg-package=1.0.7
 
 CMD rts-pred
 CMD rts-pred-uncert
