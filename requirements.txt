@@ -6,7 +6,7 @@ numpy~=1.21.2
 torch~=1.9.1
 pytorch-lightning~=1.4.9
 torch-optimizer~=0.1.0
-tifffile~=2021.8.30
+tifffile~=2022.8.12
 PyYAML~=5.4.1
 
 torchvision~=0.10.1
