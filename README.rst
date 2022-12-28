@@ -26,11 +26,9 @@ Root-Tissue-Segmentation Package
 
 Prediction package for reproducible U-Net models, trained for semantic segmentation of microscopy images of root tissue from *A. thaliana* (https://github.com/qbic-pipelines/root-tissue-segmentation-core/). These models are trained using the mlf-core framework and tested for reproducibility. This package can be deployed within an analysis pipeline as a module for root tissue segmentation (rts) of fluorescence microscopy images.
 
-This package can be installed via pip: https://pypi.org/project/root-tissue-seg-package/
+* This package can be installed via pip: https://pypi.org/project/root-tissue-seg-package/
 
-* Free software: MIT
-* Documentation: https://rts-package.readthedocs.io.
-
+* The trained pytorch model used for prediction can be found here: https://zenodo.org/record/6937290/
 
 Package Tools
 -------------
@@ -46,6 +44,12 @@ Usage Examples
 * ``rts-pred-uncert -i ./brightfields -o ./predictions -m mark1-PHDFM-u2net-model.ckpt --suffix "" -t 5``
 * ``rts-feat-imp -i ./brightfields -o ./predictions -m mark1-PHDFM-u2net-model.ckpt --suffix "" -t 2``
 
+Additional Information
+-------------
+
+* Free software under MIT license
+
+* Documentation: https://rts-package.readthedocs.io.
 
 Credits
 -------
