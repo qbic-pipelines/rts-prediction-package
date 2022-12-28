@@ -26,7 +26,7 @@ Root-Tissue-Segmentation Package
 
 Prediction package for reproducible U-Net models, trained for semantic segmentation of microscopy images of root tissue from *A. thaliana* (https://github.com/qbic-pipelines/root-tissue-segmentation-core/). These models are trained using the mlf-core_ framework and tested for reproducibility. This package can be deployed within an analysis pipeline as a module for root tissue segmentation (rts) of fluorescence microscopy images.
 
-This prediction module implements the Monte Carlo Dropout procedure (https://arxiv.org/abs/1506.02142) to calculate prediction uncertainty (uncertainty maps). Additionally, this module uses the Guided Grad-CAM algorithm (https://arxiv.org/abs/1610.02391) to compute input feature importance visualizations (interpretability maps).
+This prediction module implements the Monte Carlo Dropout procedure (https://arxiv.org/abs/1506.02142) to calculate prediction uncertainty (uncertainty maps). Additionally, this module uses the Guided Grad-CAM algorithm (https://arxiv.org/abs/1610.02391) to compute input feature importance visualizations (interpretability maps), as implemented by the Captum library (https://captum.ai/).
 
 * This package can be installed via pip: https://pypi.org/project/root-tissue-seg-package/
 
