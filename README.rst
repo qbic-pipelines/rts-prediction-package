@@ -47,7 +47,7 @@ Usage Examples
 * ``rts-feat-imp -i ./brightfields -o ./predictions -m mark1-PHDFM-u2net-model.ckpt --suffix "" -t 2``
 
 Additional Information
--------------
+----------------------
 
 * Free software under MIT license
 
