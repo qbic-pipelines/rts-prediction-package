@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Root-Tissue-Segmentation Package &mdash; rts_package 1.1.12 documentation</title>
+  <title>Root-Tissue-Segmentation Package &mdash; rts_package 1.0.7 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/custom_cookietemple.css" type="text/css" />
@@ -31,7 +31,7 @@
             <a href="index.html" class="icon icon-home"> rts_package
           </a>
               <div class="version">
-                1.1.12
+                1.0.7
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -46,6 +46,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Root-Tissue-Segmentation Package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#package-tools">Package Tools</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage-examples">Usage Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#additional-information">Additional Information</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#credits">Credits</a></li>
 </ul>
 </li>
@@ -87,10 +88,11 @@
 <a class="reference external image-reference" href="https://pypi.python.org/pypi/rts_package"><img alt="PyPI Status" src="https://img.shields.io/pypi/v/rts_package.svg" /></a>
 <a class="reference external image-reference" href="https://rts_package.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/rts_package/badge/?version=latest" /></a>
 <a class="reference external image-reference" href="https://flat.badgen.net/dependabot/thepracticaldev/dev.to?icon=dependabot"><img alt="Dependabot Enabled" src="https://flat.badgen.net/dependabot/thepracticaldev/dev.to?icon=dependabot" /></a>
-<p>Prediction package for reproducible U-Net models, trained for semantic segmentation of microscopy images of root tissue from <em>A. thaliana</em> (<a class="reference external" href="https://github.com/qbic-pipelines/root-tissue-segmentation-core/">https://github.com/qbic-pipelines/root-tissue-segmentation-core/</a>). These models are trained using the mlf-core framework and tested for reproducibility. This package can be deployed within an analysis pipeline as a module for root tissue segmentation (rts) of fluorescence microscopy images.</p>
+<p>Prediction package for reproducible U-Net models, trained for semantic segmentation of microscopy images of root tissue from <em>A. thaliana</em> (<a class="reference external" href="https://github.com/qbic-pipelines/root-tissue-segmentation-core/">https://github.com/qbic-pipelines/root-tissue-segmentation-core/</a>). These models are trained using the <a class="reference external" href="https://mlf-core.com">mlf-core</a> framework and tested for reproducibility. This package can be deployed within an analysis pipeline as a module for root tissue segmentation (rts) of fluorescence microscopy images.</p>
+<p>This prediction module implements the Monte Carlo Dropout procedure (<a class="reference external" href="https://arxiv.org/abs/1506.02142">https://arxiv.org/abs/1506.02142</a>) to calculate prediction uncertainty (uncertainty maps). Additionally, this module uses the Guided Grad-CAM algorithm (<a class="reference external" href="https://arxiv.org/abs/1610.02391">https://arxiv.org/abs/1610.02391</a>) to compute input feature importance visualizations (interpretability maps), as implemented by the Captum library (<a class="reference external" href="https://captum.ai/">https://captum.ai/</a>).</p>
 <ul class="simple">
-<li><p>Free software: MIT</p></li>
-<li><p>Documentation: <a class="reference external" href="https://rts-package.readthedocs.io">https://rts-package.readthedocs.io</a>.</p></li>
+<li><p>This package can be installed via pip: <a class="reference external" href="https://pypi.org/project/root-tissue-seg-package/">https://pypi.org/project/root-tissue-seg-package/</a></p></li>
+<li><p>The trained pytorch model used for prediction can be found here: <a class="reference external" href="https://zenodo.org/record/6937290/">https://zenodo.org/record/6937290/</a></p></li>
 </ul>
 <section id="package-tools">
 <h2>Package Tools<a class="headerlink" href="#package-tools" title="Permalink to this headline"></a></h2>
@@ -106,6 +108,13 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">rts-pred</span> <span class="pre">-i</span> <span class="pre">./brightfields</span> <span class="pre">-o</span> <span class="pre">./predictions</span> <span class="pre">-m</span> <span class="pre">mark1-PHDFM-u2net-model.ckpt</span> <span class="pre">--suffix</span> <span class="pre">&quot;&quot;</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rts-pred-uncert</span> <span class="pre">-i</span> <span class="pre">./brightfields</span> <span class="pre">-o</span> <span class="pre">./predictions</span> <span class="pre">-m</span> <span class="pre">mark1-PHDFM-u2net-model.ckpt</span> <span class="pre">--suffix</span> <span class="pre">&quot;&quot;</span> <span class="pre">-t</span> <span class="pre">5</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rts-feat-imp</span> <span class="pre">-i</span> <span class="pre">./brightfields</span> <span class="pre">-o</span> <span class="pre">./predictions</span> <span class="pre">-m</span> <span class="pre">mark1-PHDFM-u2net-model.ckpt</span> <span class="pre">--suffix</span> <span class="pre">&quot;&quot;</span> <span class="pre">-t</span> <span class="pre">2</span></code></p></li>
+</ul>
+</section>
+<section id="additional-information">
+<h2>Additional Information<a class="headerlink" href="#additional-information" title="Permalink to this headline"></a></h2>
+<ul class="simple">
+<li><p>Free software under MIT license</p></li>
+<li><p>Documentation: <a class="reference external" href="https://rts-package.readthedocs.io">https://rts-package.readthedocs.io</a>.</p></li>
 </ul>
 </section>
 <section id="credits">
